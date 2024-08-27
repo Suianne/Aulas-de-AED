@@ -1,3 +1,4 @@
+#include <stdio.h>
 #ifndef PILHA_H
 #define PILHA_H
 #define MAX 100
@@ -49,4 +50,17 @@ int top (type_stack *p, type_item *e){
     *e = p->item(p->top);
     return 1;
 }
+
+void printStack(type_stack p){
+    type_item e;
+    printf("\n");
+
+    //impressão da cópia da pilha
+    while(!stackEmpty){
+        pop(&p, &e);
+        printf("%d", e);
+    }
+}
+
+
 #endif
