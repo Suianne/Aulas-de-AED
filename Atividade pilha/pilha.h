@@ -97,4 +97,27 @@ int compareStacks(type_stack p1, type_stack p2){
 
 }
 
+int stackStacks(type_stack *p1, type_stack *p2){
+	if(lenStack(p1) + lenStack(p2) > MAX){
+		return 0;
+	} else {
+		type_stack sAux;
+		initializeStack(&sAux);
+		
+		type_item e;
+		
+		while(!stackEmpty(p2)){
+			pop(p2, &e);
+			push(&sAux, e);
+		}
+		
+		while(!stackEmpty(&sAux)){
+			pop(&sAux, &e);
+			push(p1, e);
+		}
+		
+		return 1;
+	}
+}
+
 #endif
