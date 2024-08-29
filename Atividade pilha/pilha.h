@@ -79,5 +79,22 @@ void withoutOdd (type_stack *p){
     }
 }
 
+int compareStacks(type_stack p1, type_stack p2){
+    if(lenStack(&p1) != lenStack(&p2)) 
+        return 0; //falso, são diferentes
+
+    type_item e1, e2;
+    while(!stackEmpty(&p1)){
+        pop(&p1, &e1);
+        pop(&p2, &e2);
+
+        if(e1 != e2){
+            return 0;
+        }
+    }
+
+    return 1;
+
+}
 
 #endif
