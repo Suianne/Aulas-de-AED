@@ -1,6 +1,7 @@
 #ifndef FILA_H
 #define FILA_H
 #include <stdio.h>
+#include "pilha.h"
 #define MAX 100
 
 typedef int type_item;
@@ -58,7 +59,7 @@ int removeLine(type_line *l, type_item *e){
 	}
 }
 
-void printStack(type_line l){
+void printLine(type_line l){
 	type_item e;
 	while(!lineEmpty(&l)){
 		removeLine(&l, &e);
@@ -86,6 +87,25 @@ int lenghtLine2 (type_line l){
 	}
 	
 	return cont;
+}
+
+void inverseLine(type_line l){
+	type_stack pilha;
+	type_item e;
+	initializeStack(&pilha);
+	
+	while(!lineEmpty(&l)){
+		removeLine(&l, &e);
+		push(&pilha, e);
+	}
+	
+	while(!stackEmpty(&pilha)){
+		pop(&pilha, &e);
+		insertLine(&l, e);
+	}
+	
+	printLine(l);
+	
 }
 
 #endif
