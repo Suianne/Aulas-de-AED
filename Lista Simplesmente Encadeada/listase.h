@@ -83,6 +83,82 @@ int remove_listase(tp_listase **lista, tp_item e){
 	return 1;
 }
 
+tp_listase *busca_listase(tp_listase *lista, tp_item e){
+	tp_listase *atu;
+	atu=lista;
+	while((atu != NULL)&&(atu->info != e)){
+		atu=atu->prox;
+	}
+	if (atu==NULL) return NULL;
+	return atu;
+}
 
+int tamanho_listase(tp_listase *lista){
+	int cont=0;
+	tp_listase *atu;
+	atu=lista;
+	
+	while(atu!=NULL){
+		cont++;
+		atu=atu->prox;
+	}
+	
+	return cont;
+}
+
+void destroi_listase(tp_listase **l){
+	tp_listase *atu;
+	atu=*l;
+	while(atu!=NULL){
+		*l=atu->prox;
+		free(atu);
+		atu=*l;
+	}
+	
+	*l=NULL;
+}
+
+int qtd_nos_maiores(tp_listase *l, tp_item e){
+	int cont=0;
+	tp_listase *atu;
+	atu=l;
+	
+	while(atu!=NULL){
+		if(atu->info > e){
+			cont++;
+		}
+		
+		atu=atu->prox;
+	}
+	
+	return cont;
+}
+
+int compara_listas(tp_listase *l, tp_listase *l2){
+	if(tamanho_listase(l) != tamanho_listase(l2)) return 0;
+	
+	tp_listase *atu, *atu2;
+	atu=l;
+	atu2=l2;
+	
+	while(atu!=NULL){
+		if(atu->info != atu2->info){
+			return 0;
+		}
+		
+		atu=atu->prox;
+		atu2=atu2->prox;
+	}
+	
+	return 1;
+}
+
+int ordemNumerica(tp_listase **l, tp_item e){
+	tp_lista *atu, *ant;
+	atu=l;
+	ant = NULL;
+	
+	
+}
 
 #endif
