@@ -18,11 +18,11 @@ void initializeStack(type_stack *p){
 }
 
 int stackEmpty(type_stack *p){
-    return p->top == -1; //aqui ele retorna 1 que representa "true" 
+    return p->top == -1; //aqui ele retorna 1 que representa "true" que a pilha está vazia
 }
 
 int stackFull(type_stack *p){
-    return p->top == MAX-1;
+    return p->top == MAX-1; //aqui ele indica que a pilha tá cheia
 }
 
 int push(type_stack *p, type_item e){

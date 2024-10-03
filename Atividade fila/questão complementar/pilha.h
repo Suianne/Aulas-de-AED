@@ -120,4 +120,91 @@ int stackStacks(type_stack *p1, type_stack *p2){
 	}
 }
 
+void inverseStack(type_stack *s){
+	type_item e;
+	type_stack sAux;
+	initializeStack(&sAux);
+	
+	while(!stackEmpty(s)){
+		pop(s, &e);
+		push(&sAux, e);
+	} 
+	
+	while(!stackEmpty(&sAux)){
+		pop(&sAux, &e);
+		push(s, e);
+	}
+}
+
+int expression(char exp[], int len){
+	type_stack pilha;
+	initializeStack(&pilha);
+	type_item e, e2;
+	int num;
+	
+	for (int i = 0; i < len; i++){
+		if(exp[i] != '/' && exp[i] != '*'){
+			e = exp[i];
+			push(&pilha,e);
+		} else {
+			if(exp[i] == '*'){
+				// retira o valor anterior que estava na pilha
+				pop(&pilha, &e2);
+				num = (exp[i+1]-48) * (e2-48); // faz a conta 
+				
+				
+				e = (num+48);
+				push(&pilha, e);
+				
+				//passa pelo valor da expressão que seria o próximo
+				i++;
+			} else if (exp[i] == '/'){
+				pop(&pilha, &e2);
+				num = (e2-48) / (exp[i+1]-48);
+				
+				e = (num+48);
+				push(&pilha, e);
+				
+				i++;
+			}
+		}
+	}
+	
+	printStack(pilha);
+	
+	type_item e4, e5, e6, e7;
+	type_stack sAux;
+	initializeStack(&sAux);
+	int res=0;
+	
+
+	
+	while(!stackEmpty(&pilha)){
+		pop(&pilha, &e4);
+		
+		if(e4 != '+' || e4 != '-'){
+			push(&sAux, e4);
+		} else {
+			if(e4 == '+'){
+				pop(&sAux, &e5);
+				pop(&pilha, &e6);
+				res = (e5 - 48) + (e6-48);
+				e7 = (res+48);
+				push(&sAux, e7);
+			} else if(e4 == '-'){
+				pop(&sAux, &e5);
+				pop(&pilha, &e6);
+				res = (e5 - 48) - (e6 - 48);
+				e7 = (res+48);
+				push(&sAux, e7);
+			}
+		}
+	}
+	
+	pop(&sAux, &e7);
+	res = (e7-48);
+	
+	return res;
+}
+
 #endif
