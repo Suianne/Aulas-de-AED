@@ -154,11 +154,93 @@ int compara_listas(tp_listase *l, tp_listase *l2){
 }
 
 int ordemNumerica(tp_listase **l, tp_item e){
-	tp_lista *atu, *ant;
-	atu=l;
+	tp_listase *atu, *ant, *novo_no;
+	atu=*l;
 	ant = NULL;
+	
+	novo_no = aloca_listase();
+	
+	if(novo_no == NULL){
+		return -1;
+	}
+	
+	novo_no->info = e;
+	
+	while((atu!=NULL)&&(atu->info <= e)){
+		ant = atu;
+		atu = atu->prox;
+	}
+	
+	if(ant==NULL){
+		novo_no->prox = *l;
+		*l = novo_no;
+	} else {
+		ant->prox = novo_no;
+		novo_no->prox = atu;
+	}
+	
+	return 0;
 	
 	
 }
+
+void destroi_impares(tp_listase **l){
+	tp_listase *atu, *ant, *temp; //o temp vai guardar o ponteiro temporário para eu poder dar free nele depois
+	atu=*l;
+	ant=NULL;
+	
+	
+	while((atu!=NULL)){
+		if(atu->info % 2 != 0){
+			if(ant==NULL){ //quando esse for o primeiro nó da lista
+				temp=atu;
+				*l=atu->prox;
+				atu=atu->prox;
+				free(temp);
+			} else{
+				ant->prox = atu->prox;
+				temp = atu;
+				atu=atu->prox;
+				free(temp);
+			}
+		} else {
+			ant = atu;
+			atu = atu->prox;
+		}
+	}
+	
+}
+
+void juntar_listas(tp_listase *l1, tp_listase *l2, int tam){
+	tp_listase *atu;
+	atu = l1;
+	int cont=0;
+	
+	while (atu->prox!=NULL){
+		atu=atu->prox;
+	}
+	
+	atu->prox=l2;
+	
+	atu=l2;
+	
+	while(atu->prox!=NULL){
+		atu=atu->prox;
+	}
+	
+	atu->prox=l1;
+	
+	atu=l1;
+	
+	while((cont<tam)&&(atu->prox!=NULL)){
+		printf("%d\n", atu->info);
+		atu=atu->prox;
+		cont++;
+	}
+	
+}
+
+
+
 
 #endif

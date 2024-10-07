@@ -6,21 +6,25 @@ int main(){
 	lista = inicializa_listase();
 	lista2 = inicializa_listase();
 	
-	insere_listase_no_fim(&lista, 10);
-	insere_listase_no_fim(&lista, 20);
-	insere_listase_no_fim(&lista, 30);
-	insere_listase_no_fim(&lista, 30);
-	insere_listase_no_fim(&lista, 30);
-	
-	insere_listase_no_fim(&lista2, 10);
-	insere_listase_no_fim(&lista2, 20);
-	insere_listase_no_fim(&lista2, 40);
-	insere_listase_no_fim(&lista2, 30);
-	
+	insere_listase_no_fim(&lista, 1);
+	insere_listase_no_fim(&lista, 2);
+	insere_listase_no_fim(&lista, 3);
+	insere_listase_no_fim(&lista, 5);
+	insere_listase_no_fim(&lista, 6);
+	insere_listase_no_fim(&lista, 7);
+
+
+	imprime_listase(lista);
 	
 	printf("\n");
 	
-	printf("%d", compara_listas(lista, lista2));
+	ordemNumerica(&lista, 5);
+	
+	printf("\n");
+	
+	imprime_listase(lista);
+	
+	
 	
 	return 0;
 }
