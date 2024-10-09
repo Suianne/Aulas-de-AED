@@ -1,5 +1,5 @@
-#ifndef PILHALE_H
-#define PILHALE_H
+#ifndef "PILHALSE_H"
+#define "PILHALSE_H"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -18,7 +18,7 @@ typedef struct {
 
 
 tp_pilha *inicializa_pilha (){ //função do tipo pilha que retorna um ponteiro do tipo pilha
-	tp_pilha *pilha = (tp_pilha *) malloc(sizeof(tp_pilha));
+	tp_pilha pilha = (tp_pilha) malloc(sizeof(tp_pilha));
 	pilha->topo = NULL; //inicializa a pilha fazendo com que o ponteiro do topo seja nulo
 	return pilha;
 }
@@ -37,7 +37,7 @@ int push (tp_pilha *pilha, tp_item e){
 	
 	//alocação de um novo nó
 	tp_no *novo;
-	novo = aloca();
+	novo = *aloca();
 	if(!novo) return 0; //aqui verifica se ele conseguiu alocar o nó ou não
 	
 	//povoamento do nó com o item que foi passado
@@ -107,12 +107,13 @@ void imprime_pilha(tp_pilha *pilha){
 	
 	while(!pilha_vazia(pilha)){ //enquanto a pilha principal não estiver vazia, desimpilha, printa e depois empilha na pilha auxiliar
 		pop(pilha, &e);
-		printf("%d\n", e);
+		printf("%d", e);
 		push(pilha_aux, e);
 	}
 	
 	while(!pilha_vazia(pilha_aux)){ //faz o mesmo processo de cima, mas invertendo as pilhas 
 		pop(pilha_aux, &e);
+		printf("%d", e);
 		push(pilha, e);
 	}
 	
