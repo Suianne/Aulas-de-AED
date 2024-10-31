@@ -1,6 +1,8 @@
 #ifndef AROVREBB_H
 #define ARVOREBB_H
 #include <stdio.h>
+#include <stdlib.h>
+
 
 typedef int tp_item_a;
 
@@ -21,4 +23,64 @@ int arvore_vazia(tp_arvore raiz){
 	else return 0;
 }
 
+tp_no *aloca_no(){
+	
+	tp_no *no;
+	no = (tp_no*) malloc(sizeof(tp_no));
+	return no;
+	
+}
+
+int insere_no(tp_arvore *raiz, tp_item e){
+	tp_no *pai=NULL, *novo, *p=*raiz;
+	novo = aloca_no();
+	if(!novo) 
+		return 0;
+	
+	novo->info = e;
+	novo->dir = NULL;
+	novo->esq = NULL;
+	
+	while(p != NULL){
+		pai=p;
+		
+		if(e < p->info){
+			p=p->esq;
+		} else {
+			p=p->dir;
+		}
+	}
+	
+	if(pai != NULL){
+		
+		if(e < pai->info){
+			pai->esq = novo;
+		} else {
+			pai->dir = novo;
+		}
+	}
+	
+	else
+		*raiz = novo;
+	
+	
+	return 1;
+}
+
+void pre_ordem(tp_no *p){
+	
+	if(p != NULL){
+		printf("\n%d\n", p->info);
+		pre_ordem(p->esq);
+		pre_ordem(p->dir);
+	}
+	
+}
+
+void ordem(tp_no *p){
+	if(p != NULL){
+		ordem(p->esq);
+		printf()
+	}
+}
 #endif
