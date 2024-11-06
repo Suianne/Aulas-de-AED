@@ -67,6 +67,7 @@ int insere_no(tp_arvore *raiz, tp_item e){
 	return 1;
 }
 
+//função de percurso
 void pre_ordem(tp_no *p){
 	
 	if(p != NULL){
@@ -77,6 +78,7 @@ void pre_ordem(tp_no *p){
 	
 }
 
+//função de percurso
 void em_ordem(tp_no *p){
 	if(p != NULL){
 		em_ordem(p->esq);
@@ -85,6 +87,7 @@ void em_ordem(tp_no *p){
 	}
 }
 
+//função de percurso
 void pos_ordem(tp_no *p){
 	if(p != NULL){
 		pos_ordem(p->esq);
@@ -92,4 +95,38 @@ void pos_ordem(tp_no *p){
 		pos_ordem("\n%d\n", p->info);
 	}
 }
+
+tp_no* busca_no (tp_no *p, tp_item e){
+	while(p != NULL){
+		if(e < p->info){
+			p = p->esq;
+		} else  {
+			if(e > p->info){
+				p = p->dir;
+			} else{
+				return p;
+				}
+			}
+		}
+		
+		return NULL;
+	}
+	
+int nivel_arvore(tp_arvore raiz){
+	if(raiz == NULL) return 0;
+	int nivel_esq = nivel_arvore(raiz->esq);
+	int nivel_dir = nivel_arvore(raiz->dir);
+	
+	if(alt_esq > alt_dir){
+		return nivel_esq + 1;
+	} else {
+		return nivel_dir + 1;
+	}
+}
+
+int altura_arvore(tp_arvore raiz){
+	return nivel_arvore(raiz) - 1;
+}	
+	
+
 #endif
