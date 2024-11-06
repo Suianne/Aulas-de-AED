@@ -77,11 +77,11 @@ void pre_ordem(tp_no *p){
 	
 }
 
-void ordem(tp_no *p){
+void em_ordem(tp_no *p){
 	if(p != NULL){
-		ordem(p->esq);
+		em_ordem(p->esq);
 		printf("\n%d\n", p->info);
-		ordem(p->dir);
+		em_ordem(p->dir);
 	}
 }
 
