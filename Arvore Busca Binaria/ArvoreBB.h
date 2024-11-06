@@ -80,7 +80,16 @@ void pre_ordem(tp_no *p){
 void ordem(tp_no *p){
 	if(p != NULL){
 		ordem(p->esq);
-		printf()
+		printf("\n%d\n", p->info);
+		ordem(p->dir);
+	}
+}
+
+void pos_ordem(tp_no *p){
+	if(p != NULL){
+		pos_ordem(p->esq);
+		pos_ordem(p->dir);
+		pos_ordem("\n%d\n", p->info);
 	}
 }
 #endif
