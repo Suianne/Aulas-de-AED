@@ -1,4 +1,4 @@
-#ifndef AROVREBB_H
+#ifndef ARVOREBB_H
 #define ARVOREBB_H
 #include <stdio.h>
 #include <stdlib.h>
@@ -126,7 +126,89 @@ int nivel_arvore(tp_arvore raiz){
 
 int altura_arvore(tp_arvore raiz){
 	return nivel_arvore(raiz) - 1;
-}	
+}
+
+tp_no* busca_no_rec(tp_no *p, tp_item e){
 	
+	if(p == NULL || p->info == e){//passo base 
+		return p;
+	} else {//passo recursivo
+		if(e < p->info){
+			return busca_no_rec(p->esq, e);
+		} else if (e > p->info){
+			return busca_no_rec(p->dir, e);
+		}
+	}
+	
+}	
+
+//fila de ponteiros tipo no
+/***** Fila *****/
+
+typedef struct tp_fila {
+	tp_no *no;
+	struct tp_fila *prox;	
+} tp_fila;
+
+tp_fila * inicia_fila() {
+	return NULL;
+}
+
+int fila_vazia(tp_fila **fila) {
+	if(*fila == NULL) return 1;
+	return 0;
+}
+
+tp_fila * aloca_fila(tp_no *no) {
+	tp_fila *no_fila = (tp_fila*) malloc(sizeof(tp_fila));
+	no_fila->no = no;
+	no_fila->prox = NULL;
+	return no_fila;
+}
+
+int insere_fila(tp_fila **fila, tp_no *no) {
+	tp_fila *no_fila = aloca_fila(no), *atu = *fila;
+	if(no_fila == NULL) return 0;
+	
+	if(fila_vazia(fila)) *fila = no_fila;
+	else {
+		while(atu->prox != NULL) {
+			atu = atu->prox;
+		}
+		atu->prox = no_fila;
+	}
+	return 1;
+}
+
+tp_no * remove_fila(tp_fila **fila) {
+	tp_fila *atu = *fila;
+	*fila = atu->prox;
+	tp_no *no = atu->no;
+	free(atu);
+	atu = NULL;
+	return no;
+}
+
+void imprime_fila(tp_fila **fila) {
+	tp_fila *atu = *fila;
+	while(atu != NULL) {
+		printf("%d ", atu->no->info);
+		atu = atu->prox;
+	}
+	printf("\n");
+}
+
+void destroi_fila(tp_fila **fila) {
+	tp_fila *atu = *fila;
+	while(atu != NULL) {
+		*fila = atu->prox;
+		free(atu);
+		atu = *fila;
+	}
+	*fila = NULL;
+}
+
+
+
 
 #endif
