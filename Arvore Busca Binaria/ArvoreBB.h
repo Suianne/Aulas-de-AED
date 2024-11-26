@@ -6,7 +6,7 @@
 
 typedef int tp_item_a;
 
-typedef struct tp_no{
+typedef struct tp_no{ //struct correta
 	struct tp_no *esq;
 	tp_item_a info;
 	struct tp_no *dir;
@@ -15,15 +15,15 @@ typedef struct tp_no{
 typedef tp_no * tp_arvore;
 
 tp_arvore incializa_arvore(){
-	return NULL;
+	return NULL; //fução tá funcionando
 }
 
 int arvore_vazia(tp_arvore raiz){
-	if(raiz == NULL) return 1;
+	if(raiz == NULL) return 1; //função tá funcionando
 	else return 0;
 }
 
-tp_no *aloca_no(){
+tp_no *aloca_no(){ //tá funcionando
 	
 	tp_no *no;
 	no = (tp_no*) malloc(sizeof(tp_no));
@@ -31,16 +31,20 @@ tp_no *aloca_no(){
 	
 }
 
-int insere_no(tp_arvore *raiz, tp_item e){
-	tp_no *pai=NULL, *novo, *p=*raiz;
+int insere_no(tp_arvore *raiz, tp_item_a e){
+	tp_no *pai=NULL, *novo, *p=*raiz; /*pai - ponteiro que vai apontar para os pais das sub-árvores | novo - ponteiro temporário para o novo nó 
+	| p - ponteiro que começa apontando para raiz*/
 	novo = aloca_no();
-	if(!novo) 
+	if(!novo)
 		return 0;
 	
+	//povoamento do nó com as informações
+	//esse é um nó folha, todo nó folha tem sempre os ponteiros direito e esquerdo nulo
 	novo->info = e;
 	novo->dir = NULL;
 	novo->esq = NULL;
 	
+	//verificando em qual subárvore vai ficar e qual é o seu pai
 	while(p != NULL){
 		pai=p;
 		
@@ -51,6 +55,7 @@ int insere_no(tp_arvore *raiz, tp_item e){
 		}
 	}
 	
+	//verrificando se o novo nó fica à esquerda ou à direito do pai
 	if(pai != NULL){
 		
 		if(e < pai->info){
@@ -60,14 +65,16 @@ int insere_no(tp_arvore *raiz, tp_item e){
 		}
 	}
 	
+	
+	//se não for nenhum dos casos, então o novo nó é raiz 
 	else
 		*raiz = novo;
 	
 	
-	return 1;
+	return 1; //funcionandoo!!!
 }
 
-//função de percurso
+//função de percurso: raiz, esquerda, direita
 void pre_ordem(tp_no *p){
 	
 	if(p != NULL){
@@ -76,27 +83,32 @@ void pre_ordem(tp_no *p){
 		pre_ordem(p->dir);
 	}
 	
+	//funcionandoo!!!	
 }
 
-//função de percurso
+//função de percurso: esquerda, raiz, direita
 void em_ordem(tp_no *p){
 	if(p != NULL){
 		em_ordem(p->esq);
 		printf("\n%d\n", p->info);
 		em_ordem(p->dir);
 	}
+	
+	//funcionandoo!!!
 }
 
-//função de percurso
+//função de percurso: esquerda, direita, raiz
 void pos_ordem(tp_no *p){
 	if(p != NULL){
 		pos_ordem(p->esq);
 		pos_ordem(p->dir);
-		pos_ordem("\n%d\n", p->info);
+		printf("\n%d\n", p->info);
 	}
+	
+	//funcionandoo!!
 }
 
-tp_no* busca_no (tp_no *p, tp_item e){
+tp_no* busca_no (tp_no *p, tp_item_a e){ //função retorna o endereço da memória na alocação dinâmica do nó correspondente
 	while(p != NULL){
 		if(e < p->info){
 			p = p->esq;
@@ -110,25 +122,32 @@ tp_no* busca_no (tp_no *p, tp_item e){
 		}
 		
 		return NULL;
-	}
+		//funcionandoo!!
+}
 	
-int nivel_arvore(tp_arvore raiz){
+int nivel_arvore(tp_arvore raiz){ //funcionando
 	if(raiz == NULL) return 0;
-	int nivel_esq = nivel_arvore(raiz->esq);
-	int nivel_dir = nivel_arvore(raiz->dir);
+	int alt_esq = nivel_arvore(raiz->esq); /*trecho recursivo, vai em cada sub-arvore para descobrir a altura de cada uma e ir somando
+	enquanto desce para outros niveis*/
+	int alt_dir = nivel_arvore(raiz->dir); //trecho recursivo
 	
+	
+	//escolhe a maior nivel, seja da direita ou da esquerda
+	//o maior "braço" da árvore, tem o maio nivel
 	if(alt_esq > alt_dir){
-		return nivel_esq + 1;
+		return alt_esq + 1;
 	} else {
-		return nivel_dir + 1;
+		return alt_dir + 1;
 	}
+	
 }
 
 int altura_arvore(tp_arvore raiz){
+	/*assumindo que a altura da arovre, e o nivel menos a raiz, reaproveitei a função do nível*/
 	return nivel_arvore(raiz) - 1;
 }
 
-tp_no* busca_no_rec(tp_no *p, tp_item e){
+tp_no* busca_no_rec(tp_no *p, tp_item_a e){
 	
 	if(p == NULL || p->info == e){//passo base 
 		return p;
@@ -140,6 +159,18 @@ tp_no* busca_no_rec(tp_no *p, tp_item e){
 		}
 	}
 	
+}
+
+int nos = 0;
+
+int qt_nos (tp_no *p){
+	if(p != NULL){
+		nos++;
+		qt_nos(p->dir);
+		qt_nos(p->esq);
+	}
+	
+	return nos;
 }	
 
 //fila de ponteiros tipo no
