@@ -17,6 +17,7 @@ int main(){
 	printf("2 - Ler um arquivo \n");
 	printf("3 - Editar um arquivo\n");
 	printf("4 - Retirar informacoes do arquivo\n");
+	printf("5 - inserir em ordem\n");
 	
 	scanf(" %c", &opcao);
 	printf("Digite o nome do arquivo: ");
@@ -37,6 +38,14 @@ int main(){
 			} else {
 				printf("Erro!");
 			}
+				break;
+		case '5': 
+				printf("Informe o novo jogador: ");
+				scanf("%s", nome);
+				printf("Informe a pontuação do jogador");
+				scanf("%d", &pontuacao);
+				
+				inserir_em_ordem(arq, nomearq, nome, pontuacao);
 				break;
 	}
 	return 0;

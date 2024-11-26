@@ -80,44 +80,51 @@ int resgatar_informacoes(FILE *arq, char nomearq[], char* nome, int* pontuacao){
 	return 0;
 }
 
-int inserir_em_ordem(FILE *arq, char nomearq[], char* nome, int *pontuacao){
-	FILE *tempArq; //arquivo temporário para que sejam salvas as novas informações
-	char linha[100];
-	char nome2[50];
-	int pontuacao2;
-	int inserido = 0;
-	
-	arq = fopen(nomearq, "r");
-	if(!arq) return 0;
-	
-	temArq = fopen("temp.txt", "w");
-	if(!tempArq){
-		fclose(arq);
-		return 0;
-	}
-	
-	//verificando a inserção do jogador
-	while(fgets(linha, sizeof(linha), arq)){
-		sscanf(linha, "%[^:]:%d", nome2, pontuacao2);
-		
-		
-		if(!inserido && pontuacao > pontuacao2){
-			fprintf(tempArq, "%s:%d\n", nome, pontuacao);
-			inserido = 1;
-		}
-		
-		fprintf(tempArq, "%s:%d\n", nome2, pontuacao2);
-	}
-	
-	if (!inserido){
-		fprintf(tempArq, "%s:%d\n", nome, pontuacao);
-	}
-	
-	fclose(arq);
-	fclose(tempArq);
-	
-	remove(nomearq);
-	rename("temp.txt", nomearq);
+int inserir_em_ordem(FILE *arq, char nomearq[], char nome[], int pontuacao) {
+    FILE *tempArq; // arquivo temporário para salvar as novas informações
+    char linha[100];
+    char nome2[50];
+    int pontuacao2;
+    int inserido = 0;
+    
+    arq = fopen(nomearq, "r");
+    if (!arq) return 0;  
+    
+    tempArq = fopen("temp.txt", "w");
+    if (!tempArq) {
+        fclose(arq);
+        return 0;  
+    }
+    
+    // Lê cada linha do arquivo original e insere o novo jogador na posição certa
+    while (fgets(linha, sizeof(linha), arq)) {
+
+        sscanf(linha, "%[^:]:%d", nome2, &pontuacao2);
+        
+        // Verifica se o novo jogador deve ser inserido antes deste jogador
+        if (!inserido && pontuacao > pontuacao2) {
+            fprintf(tempArq, "%s:%d\n", nome, pontuacao); 
+            inserido = 1;  
+        }
+        
+        // Escreve a linha do jogador atual no arquivo temporário
+        fprintf(tempArq, "%s:%d\n", nome2, pontuacao2);
+    }
+    
+    // Se o novo jogador não foi inserido, coloca ele no final
+    if (!inserido) {
+        fprintf(tempArq, "%s:%d\n", nome, pontuacao);
+    }
+    
+    fclose(arq);
+    fclose(tempArq);
+    
+    // Substitui o arquivo original pelo temporário
+    remove(nomearq);
+    rename("temp.txt", nomearq);
+    
+    return 1;  
 }
+
 
 #endif
