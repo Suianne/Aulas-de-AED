@@ -171,6 +171,88 @@ int qt_nos (tp_no *p){
 	}
 	
 	return nos;
+}
+
+//essa função remove o nó do elemento pedido
+int remove_no(tp_arvore *raiz, tp_item_a e){
+	tp_no *p=*raiz, *ant=NULL, *sub, *pai, *filho;
+	
+	while(p != NULL && p->info != e){
+		ant = p;
+		if(e <p->info){
+			p=p->esq;
+		} else {
+			p=p->dir;
+		}
+	}
+	
+	if(p==NULL) return 0; //não foi encontrado nó com esse número
+	
+	//nos demais casos, trabalhamos com as subárvores e seus ponteiros
+	
+	//caso 1: o nó tem um filho no máximo, na direita ou esquerda
+	
+	
+	if(p->esq == NULL){//o único filho está na direita da subárvore
+		sub = p->dir;
+	} else {
+		//o único filho está na esquerda
+		
+		if(p->dir == NULL){
+			sub = p->esq;
+		} else {
+			
+			//caso 2: o nó tem dois filhos, direita e esquerda
+			pai=p; //o nó encontrado é nomeado como pai
+			sub = p->dir; //sub será o novo nó da subárvore
+			filho = p->esq; //esse vai ser o novo filho da subárvore do pai que saiu da direita de p
+			
+			while(filho != NULL){ //buscando o nó mais à esquerda
+				pai = sub;
+				sub = filho;
+				filho = sub->esq;
+			}
+			
+			/* neste ponto, sub é o sucessor em ordem de p */
+			
+			if(pai != p){
+				//p não é o pai do sub atual (raiz da subárvore atual) e sub == pai->esq
+				pai->esq = sub->dir;
+				
+				
+				/*remove o nó apontado por sub da sua atual posição 
+				e o substitui pelo filho direito de p */
+				
+				//sub ocupa o lugar de p
+				
+				sub->dir = p->dir;
+			}
+			
+			//define filho à esquerda de sub para ocupar o lugar de p
+			
+			sub->esq = p->esq;
+			
+		}
+
+		
+	}
+	
+	//insere sub na posição ocupada por p
+	if(ant == NULL){
+		raiz = sub; //significa que o nó que vai ser retirado era raiz
+		
+	} else {
+		if (p == ant->esq){
+			ant->esq = sub;
+		} else {
+			ant->dir = sub;
+		}
+	}
+	
+	free(p);
+	return 1;
+	
+	
 }	
 
 //fila de ponteiros tipo no
