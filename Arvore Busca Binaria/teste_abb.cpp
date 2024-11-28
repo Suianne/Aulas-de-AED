@@ -14,17 +14,21 @@ int main(){
 	insere_no(&raiz, 20);
 	
 
-	int nivelArvore = nivel_arvore(raiz);
+//	int nivelArvore = nivel_arvore(raiz);
+//	
+//	printf("O nivel da arvore e: %d", nivelArvore);
+//	
+//	printf("\n");
+//	
+//	int altArvore = altura_arvore(raiz);
+//	
+//	printf("A altura da arvore e: %d", altArvore);
+//	
+//	printf("A quantidade de nos na arvore e: %d", qt_nos(raiz));
 	
-	printf("O nivel da arvore e: %d", nivelArvore);
-	
-	printf("\n");
-	
-	int altArvore = altura_arvore(raiz);
-	
-	printf("A altura da arvore e: %d", altArvore);
-	
-	printf("A quantidade de nos na arvore e: %d", qt_nos(raiz));
+//	remove_no(&raiz, 10);
+//	
+//	em_ordem(raiz);
 
 //	tp_no *resultado = busca_no(raiz, 8);
 //	if(resultado != NULL && resultado->info == 8){
@@ -42,6 +46,7 @@ int main(){
 //	pre_ordem(raiz);
 //	em_ordem(raiz);
 //	pos_ordem(raiz);
+
 	
 	return 0;
 }
